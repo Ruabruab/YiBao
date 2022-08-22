@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    username: root
+    password: W123456w
+    url: jdbc:mysql://rm-2zez4435ng355jfw1ao.mysql.rds.aliyuncs.com:3306/dataease?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver

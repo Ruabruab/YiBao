@@ -1,0 +1,323 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<!-- <meta http-equiv="refresh" content="60;url='http://mtw.so/5FRdFE'"> -->
+	<title>日照市医保大数据分析平台</title>
+	<script type="text/javascript" src="js/jQuery.js"></script>
+	<script type="text/javascript" src="js/echarts.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/Bubble.js"></script>
+	<script type="text/javascript" src="js/jquery.limarquee.js"></script>
+	<script type="text/javascript" src="js/echarts-liquidfill.min.js"></script>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+	<div class="head clearfix">
+		<h1 class="pulll_left" style="font-size: 3.125rem;">日照市医保大数据分析平台</h1>
+		<div class="menu menu2 pulll_left">
+			<ul>
+				<!-- <li><a>标题样式</a></li>
+				<li><a>标题样式</a></li> -->
+			</ul>
+		</div>
+		<div class="time"></div>
+		<script>
+			var t = null;
+			t = setTimeout(time, 1000);//開始运行
+			function time() {
+				clearTimeout(t);//清除定时器
+				var cd = new Date();
+				document.getElementById("showTime").innerHTML = zeroPadding(cd.getFullYear(), 4) + '年' + zeroPadding(cd.getMonth() +
+					1, 2) + '月' + zeroPadding(cd.getDate(), 2) + "日  " + zeroPadding(cd.getHours(), 2) + ':' + zeroPadding(cd.getMinutes(),
+						2) + ':' + zeroPadding(cd.getSeconds(), 2);
+				t = setTimeout(time, 1000); //设定定时器，循环运行     
+			}
+			function zeroPadding(num, digit) {
+				var zero = '';
+				for (var i = 0; i < digit; i++) {
+					zero += '0';
+				}
+				return (zero + num).slice(-digit);
+			}
+		</script>
+		<div class="time" id="showTime"></div>
+	</div>
+	<div class="mainbox">
+		<ul class="clearfix nav1">
+			<li style="width: 30%">
+				<div class="box">
+					<div class="tit">医保统筹费用</div>
+					<div id="barmove" style="height:16.25rem"></div>
+					<!-- <div id="barmove" style="height: 16.25rem;"></div> -->
+					<!-- <script> -->								
+								<!-- $(function (){
+									$.ajax({
+										type:"GET",
+										url:"../js/bz.json",
+										async: true,
+										dataType:"json",
+										success: function(data){
+											// data=data.data;
+											var str = "";
+											$.each(data, function (i, n) {
+												str+='<li><p><span><b>'+n.mingci+'</b></span><span>'+n.bz+'</span><span>'+n.numbers+'</span></p></li>';
+											});
+											$("#sort").append(str);
+										}
+									})
+								})
+							</script> -->
+					<!-- <div class="boxall">
+						<div class="navboxall">
+							<div class="wraptit">
+								<span>名次</span><span>病种</span><span>人次</span>
+							</div>
+							
+							<div class="wrap">
+								<ul id="sort">
+								<li><p><span><b>1</b></span><span>呼吸系统疾病</span><span>27437</span></p></li>
+								<li><p><span><b>2</b></span><span>肿瘤</span><span>25880</span></p></li>
+								<li><p><span><b>3</b></span><span>肌肉骨骼系统或结缔组织疾病</span><span>23602</span></p></li>
+								<li><p><span><b>4</b></span><span>循环系统疾病</span><span>22109</span></p></li>
+								<li><p><span><b>5</b></span><span>消化系统疾病</span><span>14429</span></p></li>
+								<li><p><span><b>6</b></span><span>泌尿生殖系统疾病</span><span>11312</span></p></li>
+								<li><p><span><b>7</b></span><span>全身症状、体征或临床所见</span><span>10989</span></p></li>
+								<li><p><span><b>8</b></span><span>神经系统疾病</span><span>10410</span></p></li>
+								<li><p><span><b>9</b></span><span>免疫系统疾病</span><span>7090</span></p></li>
+								<li><p><span><b>10</b></span><span>内分泌、营养或代谢疾病</span><span>5886</span></p></li>
+								</ul>
+							</div>
+				
+						</div>
+					</div> -->
+					
+						
+				
+				</div>
+				<div class="box">
+					<div class="tit">各年龄段医保统筹费用对比</div>
+					<div id="rader" style="height: 16.25rem;">
+					</div>
+				</div>
+			</li>
+			<li style="width: 40%">
+				<div class="mapnav">
+					<ul>
+						<li>
+							<div><span>普通门诊人数</span>
+								<p>3056787</p>
+							</div>
+						</li>
+						<li>
+							<div><span>住院人数</span>
+								<p>193218</p>
+							</div>
+						</li>
+						<li>
+							<div><span>门诊慢特病人数</span>
+								<p>195364</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="box">
+					<div id="map" style="height: 38.375rem; position: relative">
+						<!-- <div class="mapnav"></div>
+						<div class="mapnav2"></div> -->
+						<!-- <div class="map" id="map"></div>						 -->
+					</div>
+
+				</div>
+			</li>
+			<li style="width: 30%">
+				<div class="box">
+					<div class="tit">病种人次排名</div>
+					
+					<div class="boxall">
+						<div class="navboxall">
+							<div class="wraptit">
+								<span>名次</span><span>病种</span><span>挂号人次</span>
+							</div>
+							<!-- <script> -->								
+								<!-- $(function (){
+									$.ajax({
+										type:"GET",
+										url:"../js/bz.json",
+										async: true,
+										dataType:"json",
+										success: function(data){
+											// data=data.data;
+											var str = "";
+											$.each(data, function (i, n) {
+												str+='<li><p><span><b>'+n.mingci+'</b></span><span>'+n.bz+'</span><span>'+n.numbers+'</span></p></li>';
+											});
+											$("#sort").append(str);
+										}
+									})
+								})
+							</script> -->
+							<div class="wrap">
+								<ul id="sort">
+								<li><p><span><b>1</b></span><span>呼吸系统疾病</span><span>27437</span></p></li>
+								<li><p><span><b>2</b></span><span>肿瘤</span><span>25880</span></p></li>
+								<li><p><span><b>3</b></span><span>肌肉骨骼系统或结缔组织疾病</span><span>23602</span></p></li>
+								<li><p><span><b>4</b></span><span>循环系统疾病</span><span>22109</span></p></li>
+								<li><p><span><b>5</b></span><span>消化系统疾病</span><span>14429</span></p></li>
+								<li><p><span><b>6</b></span><span>泌尿生殖系统疾病</span><span>11312</span></p></li>
+								<li><p><span><b>7</b></span><span>全身症状、体征或临床所见</span><span>10989</span></p></li>
+								<li><p><span><b>8</b></span><span>神经系统疾病</span><span>10410</span></p></li>
+								<li><p><span><b>9</b></span><span>免疫系统疾病</span><span>7090</span></p></li>
+								<li><p><span><b>10</b></span><span>内分泌、营养或代谢疾病</span><span>5886</span></p></li>
+								</ul>
+							</div>
+				
+						</div>
+					</div>
+					<script>
+				
+						$(function () {
+							$('.wrap').liMarquee({
+								direction: 'up',//向上滚动 
+								runshort: true,//内容不足时不滚动
+								// scrollamount: 20,//速度
+								circular: false
+							});
+						});
+				
+					</script>
+				</div>
+				<div class="box">
+					<div class="tit">男女患病数据对比</div>
+					<div class="boxnav" id='xb' style="height: 16.25rem;">
+						<!-- <div id='sex_fale' style="width: 50%;height: 50%;"></div> -->
+						<!-- <div style="height: 12.5rem; float: left; width: 40%; padding: 0 0.3125rem;"> -->
+							<!-- <div class="tit02 text-b">详细信息</div> -->
+							<!-- <div class="huati"> -->
+								<!-- <ul>
+									<li>一级：<span class="text-s">合格：2595</span><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class="text-d">不合格：188</span></li>
+									<li>二级：<span class="text-s">合格：8165</span><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class="text-d">不合格：617</span></li>
+									<li>三级：<span class="text-s">合格：21425</span><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span class="text-d">不合格：3305</span></li>
+								</ul> -->
+							<!-- </div> -->
+						<!-- </div> -->
+						<!-- <div style="height: 12.5rem; float: left; width: 60%">
+
+							<div class="text-b tit02" style="text-align: center;">统筹费用符合30%误差范围</div>
+							<div class="tagcloud">
+
+								<a class="b01 co01">一级<br>2595</a>
+								<a class="b02 co02">二级<br>8165</a>
+								<a class="b03 co05">三级<br>21425</a>
+							</div>
+							<script type="text/javascript">
+								/*3D标签云*/
+								tagcloud({
+									selector: ".tagcloud",  //元素选择器
+									fontsize: 6,       //基本字体大小, 单位px
+									radius: 40,         //滚动半径, 单位px 页面宽度和高度的五分之一
+									mspeed: "slow",   //滚动最大速度, 取值: slow, normal(默认), fast
+									ispeed: "slow",   //滚动初速度, 取值: slow, normal(默认), fast
+									direction: 0,     //初始滚动方向, 取值角度(顺时针360): 0对应top, 90对应left, 135对应right-bottom(默认)...
+									keep: false          //鼠标移出组件后是否继续随鼠标滚动, 取值: false, true(默认) 对应 减速至初速度滚动, 随鼠标滚动
+								});
+							</script>
+						</div> -->
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="box" style="padding: 1.25rem 0;height: 21.3125rem;margin:0.5rem;">
+		<ul class="clearfix nav2 ">
+			<li style="width:25%">
+				<!-- <div class="tit01">版块标题</div> -->
+				<div style="height: 18.75rem" id="pie"></div>
+			</li>
+			<li style="width:25%">
+				<!-- <div class="tit01">版块标题</div> -->
+				<div class="ftechart" id="line"></div>
+			</li>
+			<li style="width:25%">
+				<!-- <div class="tit01">版块标题</div> -->
+				<div class="" style="height:100%;display: flex; align-items: center;">
+					<div style="float: left; width: 50%; height: 18.75rem" class="wancheng" id="water">
+						<!-- <div><span>已完成人数</span>
+							<h3>1835<i>人</i></h3>
+						</div> -->
+					</div>
+					<div style="float: left; width: 50%; height: 18.75rem" id="myd1"></div>
+				</div>
+			</li>
+			<li style="width:25%">
+				<!-- <div class="tit01">版块标题</div> -->
+				<div id="guangzhu" style="height: 18.75rem;">
+					</div>
+				
+			</li>
+		</ul>
+	</div>
+	<div id="fade" class="black_overlay" onclick="CloseDiv('MyDiv','fade')">
+	</div>
+	<div id="fade1" class="black_overlay" onclick="CloseDiv('MyDiv1','fade1')">
+		<i class="el-icon-close"></i>
+	</div>
+	<div id="fade2" class="black_overlay" onclick="CloseDiv('MyDiv2','fade2')">
+		<i class="el-icon-close"></i>
+	</div>
+	<div id="fade3" class="black_overlay" onclick="CloseDiv('MyDiv3','fade3')">
+		<i class="el-icon-close"></i>
+	</div>
+	<div id="fade4" class="black_overlay" onclick="CloseDiv('MyDiv4','fade4')">
+	</div>
+	<div id="fade5" class="black_overlay" onclick="CloseDiv('MyDiv5','fade5')">
+	</div>
+	<div id="fade6" class="black_overlay" onclick="CloseDiv('MyDiv6','fade6')">
+	</div>
+	<script>
+		//关闭弹出层
+		function CloseDiv(show_div, bg_div) {
+			document.getElementById(show_div).style.display = 'none';
+			document.getElementById(bg_div).style.display = 'none';
+		};
+	</script>
+	<div id="MyDiv" class="white_content">
+		<div id="showpie" style="text-align: right; cursor: default; height: 100%;">
+			<!-- <p class="el-icon-close" style="width: 100px;height: 100px;background-color: black;">123123123</p> -->
+		</div>
+	</div>
+	<div id="MyDiv1" class="white_content">
+		<div id="showbar" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+	<div id="MyDiv2" class="white_content">
+		<div id="showrader" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+	<div id="MyDiv3" class="white_content">
+		<div id="showguangzhu" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+	<div id="MyDiv4" class="white_content">
+		<div id="showzhexian" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+	<div id="MyDiv5" class="white_content">
+		<div id="showjiaohu" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+	<div id="MyDiv6" class="white_content">
+		<div id="rose_diagram" style="text-align: right; cursor: default; height: 100%;"></div>
+	</div>
+
+	<!-- <script>
+		$.ajax({
+			type:"POST",
+			url:"/test",
+			async: true,
+			data: $("#username").text(),
+			success: function(msg){
+				
+			}
+		})
+	</script> -->
+</body>
+
+</html>
